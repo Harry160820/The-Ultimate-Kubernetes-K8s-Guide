@@ -69,5 +69,18 @@ alias kex='kubectl exec -it'
 
 # Auto-complete for the 'k' alias
 complete -o default -F __start_kubectl k
+```
+---
 
-## **💻 Essential kubectl Commands**
+### 💻 Essential kubectl Commands
+
+## Cluster Information
+```
+kubectl cluster-info                # Display addresses of the master and services
+kubectl get nodes                   # List all worker nodes in the cluster
+kubectl top nodes                   # Show CPU and memory usage of nodes
+```
+
+
+
+
