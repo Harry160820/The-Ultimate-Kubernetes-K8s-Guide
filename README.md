@@ -70,6 +70,7 @@ alias kex='kubectl exec -it'
 # Auto-complete for the 'k' alias
 complete -o default -F __start_kubectl k
 ```
+Run source ~/.bashrc after adding these lines.
 ---
 
 ### 💻 Essential kubectl Commands
@@ -82,5 +83,47 @@ kubectl top nodes                   # Show CPU and memory usage of nodes
 ```
 
 
+## Working with Pods
+```
+kubectl get pods                    # List all pods in the current namespace
+kubectl get pods -A                 # List pods in ALL namespaces
+kubectl get pods -o wide            # List pods with more details (IPs, nodes)
+kubectl run my-pod --image=nginx    # Create a simple pod running Nginx
+kubectl delete pod my-pod           # Delete a pod
+```
+## Deployments & Scaling
+
+```
+kubectl get deployments             # List deployments
+kubectl create deployment my-dep --image=nginx  # Create a new deployment
+kubectl scale deployment my-dep --replicas=5    # Scale the deployment to 5 pods
+kubectl set image deployment/my-dep nginx=nginx:1.19  # Rolling update to a new image version
+kubectl rollout status deployment/my-dep        # Check the status of the rollout
+kubectl rollout undo deployment/my-dep          # Rollback to the previous version
+```
+
+## Services & Networking
+```
+kubectl get services                # List all services
+kubectl expose deployment my-dep --port=80 --target-port=8080 --type=LoadBalancer # Expose a deployment
+kubectl port-forward pod/my-pod 8080:80 # Forward local port 8080 to pod's port 80
+```
+---
+### 🛠 Debugging & Troubleshooting
+When things go wrong, these are your best friends:
+```
+# 1. Check the Pod's status and events
+kubectl describe pod <pod-name>
+
+# 2. Check the container logs (add -f to stream them live)
+kubectl logs <pod-name>
+kubectl logs <pod-name> -c <container-name> # If pod has multiple containers
+
+# 3. Get inside the container to poke around
+kubectl exec -it <pod-name> -- /bin/bash  # or /bin/sh
+
+# 4. Check cluster events for broader issues
+kubectl get events --sort-by='.metadata.creationTimestamp'
+```
 
 
